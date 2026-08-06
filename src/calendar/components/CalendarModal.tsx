@@ -3,7 +3,9 @@ import Modal from 'react-modal';
 import '../../styles.css';
 import "react-datepicker/dist/react-datepicker.css";
 import { addHours } from 'date-fns';
-import DatePicker from "react-datepicker";
+import DatePicker, { registerLocale } from "react-datepicker";
+import { es } from 'date-fns/locale/es';
+registerLocale('es', es)
 
 type DateField = 'start' | 'end';
 
@@ -44,7 +46,7 @@ export const CalendarModal = () => {
       [changing]: date
     });
 
-  }
+  };
 
   const onCloseModal = () => {
     // console.log("Cerrando modal");
@@ -71,7 +73,10 @@ export const CalendarModal = () => {
             selected={formValues.start}
             onChange={(event: Date | null) => { onDateChanged(event, 'start') }}
             className={'form-control'}
-            dateFormat={"Pp"}
+            dateFormat={"Pp"} // Para que aparezca la hora
+            showTimeSelect // Seleccionar la hora
+            locale={"es"} // Idioma
+            timeCaption='Hora'
           />
         </div>
 
@@ -82,7 +87,10 @@ export const CalendarModal = () => {
             selected={formValues.end}
             onChange={(event: Date | null) => { onDateChanged(event, 'end') }}
             className={'form-control'}
-            dateFormat={"Pp"}
+            dateFormat={"Pp"} // Para que aparezca la hora
+            showTimeSelect // Seleccionar la hora
+            locale={"es"} // Idioma
+            timeCaption='Hora'
           />
         </div>
 
