@@ -4,7 +4,7 @@ import './styles.css'
 import { CalendarApp } from './CalendarApp.tsx'
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <CalendarApp />
-  </StrictMode>,
+  // <StrictMode>
+  <CalendarApp />
+  /* </StrictMode>, */
 )

@@ -1,24 +1,14 @@
-import { Calendar } from 'react-big-calendar';
+import { Calendar, type View } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { addHours } from 'date-fns'
 
 import { CalendarEvent, Navbar } from '../';
 import { localizer, getMessagesES } from '../../helpers';
-
-interface CalendarEvent {
-  title: string;
-  notes: string;
-  start: Date;
-  end: Date;
-  bgColor: string;
-  user: {
-    _id: string;
-    name: string;
-  };
-}
+import type { CalendarEventProps } from '../../interfaces';
+import { useState } from 'react';
 
 
-const myEventsList: CalendarEvent[] = [{
+const events: CalendarEventProps[] = [{
   title: 'Cumpleaños del jefe',
   notes: 'Hay que comprar pastel',
   start: new Date(),
@@ -32,8 +22,9 @@ const myEventsList: CalendarEvent[] = [{
 
 export const CalendarPage = () => {
 
-  const eventStyleGetter = (event: CalendarEvent, start: Date, end: Date, isSelected: boolean) => {
-    console.log({ event, start, end, isSelected });
+  const [lastView, setLastView] = useState<View>(localStorage.getItem('lastView') as View || 'week');
+
+  const eventStyleGetter = (event: CalendarEventProps, start: Date, end: Date, isSelected: boolean) => {
 
     const style: React.CSSProperties = {
       backgroundColor: '#347cf7',
@@ -45,7 +36,24 @@ export const CalendarPage = () => {
     return {
       style
     }
+  };
 
+  const onDoubleClick = (event: CalendarEventProps) => {
+    console.log({ onDoubleClick: event });
+  };
+
+  const onSelect = (event: CalendarEventProps) => {
+    console.log({ onSelect: event });
+
+  };
+
+  const onViewChanged = (event: View) => {
+
+    console.log(lastView);
+
+    localStorage.setItem('lastView', event);
+
+    setLastView(event);
   }
 
   return (
@@ -55,7 +63,8 @@ export const CalendarPage = () => {
       <Calendar
         culture='es'
         localizer={localizer}
-        events={myEventsList}
+        events={events}
+        defaultView={lastView}
         startAccessor="start"
         endAccessor="end"
         style={{ height: 'calc(100vh - 80px)' }}
@@ -64,6 +73,9 @@ export const CalendarPage = () => {
         components={{
           event: CalendarEvent
         }}
+        onDoubleClickEvent={onDoubleClick}
+        onSelectEvent={onSelect}
+        onView={onViewChanged}
       />
 
     </>
