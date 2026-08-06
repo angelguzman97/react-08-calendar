@@ -1,6 +1,12 @@
 import { useState } from 'react';
 import Modal from 'react-modal';
 import '../../styles.css';
+import "react-datepicker/dist/react-datepicker.css";
+import { addHours } from 'date-fns';
+import DatePicker from "react-datepicker";
+
+type DateField = 'start' | 'end';
+
 const customStyles = {
   content: {
     top: '50%',
@@ -16,12 +22,36 @@ Modal.setAppElement('#root');
 
 export const CalendarModal = () => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
+  const [formValues, setFormValues] = useState({
+    title: 'Angel',
+    note: 'Guzman',
+    start: new Date(),
+    end: addHours(new Date(), 2),
+  });
 
-  const onCloseModal = () => {
-    console.log("Cerrando modal");
-    setIsOpen(false);
+  const onInputChanged = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { target } = event;
+    setFormValues({
+      ...formValues,
+      [target.name]: target.value
+    });
+  };
+
+  const onDateChanged = (date: Date | null, changing: DateField) => {
+
+    setFormValues({
+      ...formValues,
+      [changing]: date
+    });
 
   }
+
+  const onCloseModal = () => {
+    // console.log("Cerrando modal");
+    setIsOpen(false);
+  };
+
+
   return (
     <Modal
       isOpen={isOpen}
@@ -31,13 +61,67 @@ export const CalendarModal = () => {
       overlayClassName={'modal-fondo'}
       closeTimeoutMS={200}
     >
-      <h1>Hola, Mundo!!</h1>
+      <h1> Nuevo evento </h1>
       <hr />
-      <p>Tempor sit magna magna eu laboris duis ipsum. Deserunt commodo qui nostrud ut et ex adipisicing consequat qui. Amet reprehenderit excepteur aliqua sit et consequat do incididunt reprehenderit ex est. Deserunt pariatur ea tempor enim tempor anim qui.
+      <form className="container">
 
-        Exercitation do qui pariatur minim labore nostrud eiusmod. Non aliquip commodo officia laborum labore cillum in eu consectetur ex consectetur ipsum. Nisi pariatur ad culpa labore qui.
+        <div className="form-group mb-2">
+          <label>Fecha y hora inicio</label>
+          <DatePicker
+            selected={formValues.start}
+            onChange={(event: Date | null) => { onDateChanged(event, 'start') }}
+            className={'form-control'}
+            dateFormat={"Pp"}
+          />
+        </div>
 
-        Ut dolor eu proident officia exercitation do ullamco dolore sint. Cillum exercitation deserunt officia deserunt nisi. Ipsum fugiat est do nisi enim proident cillum.</p>
+        <div className="form-group mb-2">
+          <label>Fecha y hora fin</label>
+          <DatePicker
+            minDate={formValues.start}
+            selected={formValues.end}
+            onChange={(event: Date | null) => { onDateChanged(event, 'end') }}
+            className={'form-control'}
+            dateFormat={"Pp"}
+          />
+        </div>
+
+        <hr />
+        <div className="form-group mb-2">
+          <label>Titulo y notas</label>
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Título del evento"
+            name="title"
+            autoComplete="off"
+            value={formValues.title}
+            onChange={onInputChanged}
+          />
+          <small id="emailHelp" className="form-text text-muted">Una descripción corta</small>
+        </div>
+
+        <div className="form-group mb-2">
+          <textarea
+            className="form-control"
+            placeholder="Notas"
+            rows={5}
+            name="notes"
+            value={formValues.note}
+            onChange={onInputChanged}
+          ></textarea>
+          <small id="emailHelp" className="form-text text-muted">Información adicional</small>
+        </div>
+
+        <button
+          type="submit"
+          className="btn btn-outline-primary btn-block"
+        >
+          <i className="far fa-save"></i>
+          <span> Guardar</span>
+        </button>
+
+      </form>
     </Modal>
   )
 }
