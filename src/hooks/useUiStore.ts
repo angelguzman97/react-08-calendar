@@ -1,10 +1,11 @@
-import { useDispatch, useSelector } from "react-redux"
+import {  useSelector } from "react-redux"
 import { onCloseDateModal, onOpenDateModal } from "../store";
-import type { AppDispatch, RootState } from "../store";
+import type { RootState } from "../store";
+import { useAppDispatch } from "./";
 
 export const useUiStore = () => {
 
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
 
     // Para tomar propiedades del store, se usa el useSelector
     const { isDateModalOpen } = useSelector((state: RootState) => state.ui);

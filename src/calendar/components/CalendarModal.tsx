@@ -43,7 +43,6 @@ export const CalendarModal = () => {
 
   // Memorizar los valores
   const titleClass = useMemo(() => {
-    console.log(formSubmitted);
 
     if (!formSubmitted) return '';
 
