@@ -1,10 +1,16 @@
-import { useState } from 'react';
-import Modal from 'react-modal';
-import '../../styles.css';
-import "react-datepicker/dist/react-datepicker.css";
+import { useMemo, useState } from 'react';
 import { addHours, differenceInSeconds } from 'date-fns';
+
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
+
+import Modal from 'react-modal';
+
 import DatePicker, { registerLocale } from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 import { es } from 'date-fns/locale/es';
+
 registerLocale('es', es)
 
 type DateField = 'start' | 'end';
@@ -24,12 +30,26 @@ Modal.setAppElement('#root');
 
 export const CalendarModal = () => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
+  const [formSubmitted, setFormSubmitted] = useState(false);
+
   const [formValues, setFormValues] = useState({
     title: 'Angel',
     note: 'Guzman',
     start: new Date(),
     end: addHours(new Date(), 2),
   });
+
+  // Memorizar los valores
+  const titleClass = useMemo(() => {
+    console.log(formSubmitted);
+
+    if (!formSubmitted) return '';
+
+    return (formValues.title.length > 0)
+      ? ''
+      : 'is-invalid';
+
+  }, [formValues.title, formSubmitted]);// Dependencias de cambios
 
   const onInputChanged = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { target } = event;
@@ -48,13 +68,15 @@ export const CalendarModal = () => {
 
   };
 
-  const onSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
+  const onSubmit = (event: React.SubmitEvent) => {
     event.preventDefault();
+    setFormSubmitted(true);
 
     //Diferencia de tiempo
     const difference = differenceInSeconds(formValues.end, formValues.start);
+
     if (isNaN(difference) || difference <= 0) {
-      console.log("Error en fechas");
+      Swal.fire('Fechas incorrectas', 'Revisar las fechas ingresadas', 'error');
 
       return;
     };
@@ -73,6 +95,8 @@ export const CalendarModal = () => {
     // console.log("Cerrando modal");
     setIsOpen(false);
   };
+
+  console.log('titleClass: ', titleClass);
 
 
   return (
@@ -120,9 +144,10 @@ export const CalendarModal = () => {
           <label>Titulo y notas</label>
           <input
             type="text"
-            className="form-control"
+            className={`form-control ${titleClass}`}
             placeholder="Título del evento"
             name="title"
+            id='title'
             autoComplete="off"
             value={formValues.title}
             onChange={onInputChanged}
@@ -135,7 +160,7 @@ export const CalendarModal = () => {
             className="form-control"
             placeholder="Notas"
             rows={5}
-            name="notes"
+            name="note"
             value={formValues.note}
             onChange={onInputChanged}
           ></textarea>
