@@ -30,7 +30,7 @@ const customStyles = {
 Modal.setAppElement('#root');
 
 export const CalendarModal = () => {
-  const { activeEvent } = useCalendarStore();
+  const { activeEvent, startSavingEvent } = useCalendarStore();
 
   const { isDateModalOpen, closeDateModal } = useUiStore();
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -83,7 +83,7 @@ export const CalendarModal = () => {
 
   };
 
-  const onSubmit = (event: React.SubmitEvent) => {
+  const onSubmit = async (event: React.SubmitEvent) => {
     event.preventDefault();
     setFormSubmitted(true);
 
@@ -99,9 +99,9 @@ export const CalendarModal = () => {
     if (formValues.title.length <= 0) return;
 
     // TODO:
-    // Remover errores en pantalla
-    // cerrar modal
+    await startSavingEvent(formValues);
     closeDateModal();
+    setFormSubmitted(false);
 
   }
 
