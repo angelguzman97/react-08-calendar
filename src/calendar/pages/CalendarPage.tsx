@@ -1,21 +1,21 @@
 import { Calendar, type View } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
-import { CalendarEvent, CalendarModal, Navbar } from '../';
+import { CalendarEvents, CalendarModal, Navbar } from '../';
 import { localizer, getMessagesES } from '../../helpers';
-import type { CalendarEventProps } from '../../interfaces';
 import { useState } from 'react';
 import { useCalendarStore, useUiStore } from '../../hooks';
+import type { CalendarEvent } from '../../interfaces';
 
 
 export const CalendarPage = () => {
 
   const { openDateModal } = useUiStore();
-  const { events } = useCalendarStore();
+  const { events, setActiveEvent } = useCalendarStore();
 
   const [lastView, setLastView] = useState<View>(localStorage.getItem('lastView') as View || 'week');
 
-  const eventStyleGetter = (event: CalendarEventProps, start: Date, end: Date, isSelected: boolean) => {
+  const eventStyleGetter = (event: CalendarEvent, start: Date, end: Date, isSelected: boolean) => {
 
     const style: React.CSSProperties = {
       backgroundColor: '#347cf7',
@@ -34,8 +34,9 @@ export const CalendarPage = () => {
     openDateModal();
   };
 
-  const onSelect = (event: CalendarEventProps) => {
-    console.log({ onSelect: event });
+  const onSelect = (event: CalendarEvent) => {
+
+    setActiveEvent(event);
 
   };
 
@@ -44,7 +45,7 @@ export const CalendarPage = () => {
     localStorage.setItem('lastView', event);
 
     setLastView(event);
-  }
+  };
 
   return (
     <>
@@ -61,7 +62,7 @@ export const CalendarPage = () => {
         messages={getMessagesES()}
         eventPropGetter={eventStyleGetter}
         components={{
-          event: CalendarEvent
+          event: CalendarEvents
         }}
         onDoubleClickEvent={onDoubleClick}
         onSelectEvent={onSelect}

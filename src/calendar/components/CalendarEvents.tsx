@@ -1,7 +1,7 @@
 import type { EventProps } from "../../interfaces";
 
 
-export const CalendarEvent = ({ event }: EventProps) => {
+export const CalendarEvents = ({ event }: EventProps) => {
     const { title, user } = event;
     return (
         <>

@@ -1,11 +1,12 @@
-export interface CalendarEventProps {
+export interface CalendarEvent {
+    _id?: number;
     title: string;
-    notes: string;
+    note: string;
     start: Date;
     end: Date;
-    bgColor: string;
-    user: {
+    bgColor?: string;
+    user?: {
         _id: string;
         name: string;
     };
-}
+};
