@@ -6,13 +6,13 @@ type AuthStatus = 'checking' | 'authenticated' | 'not-authenticated';
 interface AuthState {
     status: AuthStatus;
     user: User | null;
-    errorMessage: string;
+    errorMessage: string | null;
 }
 
 const initialState: AuthState = {
     status: "checking",
     user: null,
-    errorMessage: ""
+    errorMessage: null
 }
 
 export const authSlice = createSlice({
@@ -22,12 +22,12 @@ export const authSlice = createSlice({
         onChecking: (state) => {
             state.status = 'checking';
             state.user = null;
-            state.errorMessage = "";
+            state.errorMessage = null;
         },
         onLogin: (state, { payload }) => {
             state.status = 'authenticated';
             state.user = payload;
-            state.errorMessage = "";
+            state.errorMessage = null;
         },
         onLogout: (state, { payload }) => {
             state.status = 'not-authenticated';
@@ -35,7 +35,7 @@ export const authSlice = createSlice({
             state.errorMessage = payload;
         },
         clearErrorMessage: (state) => {
-            state.errorMessage = "";
+            state.errorMessage = null;
         }
     }
 });

@@ -28,7 +28,6 @@ export const useAuthStore = () => {
 
     console.log({ status, user, errorMessage });
 
-
     return {
         //* Propiedades
         errorMessage,
