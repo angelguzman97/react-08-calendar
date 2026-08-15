@@ -1,4 +1,4 @@
-import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import { createSlice} from "@reduxjs/toolkit";
 import { addHours } from "date-fns";
 import type { CalendarEvent } from "../../interfaces";
 // import type { CalendarEventProps } from "../../interfaces";
