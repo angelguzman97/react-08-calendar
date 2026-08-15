@@ -1,0 +1,1 @@
+export * as calendarApi from './calendarApi'; // se le pone as para que tome eso como referencia
