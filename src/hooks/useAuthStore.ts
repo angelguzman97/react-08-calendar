@@ -56,6 +56,11 @@ export const useAuthStore = () => {
         }
     };
 
+    const startLogout = async () => {
+        localStorage.clear();
+        dispatch(onLogout(null));
+    }
+
     return {
         //* Propiedades
         errorMessage,
@@ -66,6 +71,7 @@ export const useAuthStore = () => {
         //* Métodos
         checkAuthToken,
         startLogin,
+        startLogout,
         startRegister,
     }
 }
