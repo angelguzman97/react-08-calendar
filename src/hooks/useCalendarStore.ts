@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { useAppDispatch } from "./";
+import { useAppDispatch } from "./useAppDispatch";
 import { onAddNewEvent, onDeleteEvent, onSetActiveEvent, onUpdateEvent, type RootState } from "../store";
 import type { CalendarEvent } from "../interfaces";
 
