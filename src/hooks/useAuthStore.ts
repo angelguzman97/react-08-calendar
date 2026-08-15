@@ -23,10 +23,25 @@ export const useAuthStore = () => {
                 dispatch(clearErrorMessage());
             }, 10);
         }
-
     };
 
-    console.log({ status, user, errorMessage });
+    const startRegister = async ({ name, email, password }: User) => {
+        dispatch(onChecking());
+        try {
+            const { data } = await calendarApi.post('/auth/new', { name, email, password });
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('token-init-date', new Date().getTime().toString());
+            dispatch(onLogin({ name: data.name, uid: data.id }));
+
+        } catch (error: any) {
+            dispatch(onLogout(error.response.data.msg || ""));
+            setTimeout(() => {
+                dispatch(clearErrorMessage());
+            }, 10);
+
+        }
+
+    };
 
     return {
         //* Propiedades
@@ -37,5 +52,6 @@ export const useAuthStore = () => {
 
         //* Métodos
         startLogin,
+        startRegister,
     }
 }
