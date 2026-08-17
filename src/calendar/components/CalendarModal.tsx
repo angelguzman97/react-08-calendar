@@ -11,7 +11,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import { es } from 'date-fns/locale/es';
 import { useCalendarStore, useUiStore } from '../../hooks';
-import type { GetCalendarEvent } from '../../interfaces/GetCalendarEvent.interface';
+import type { GetCalendarEvents } from '../../interfaces/GetCalendarEvents.interface';
 
 registerLocale('es', es)
 
@@ -36,7 +36,7 @@ export const CalendarModal = () => {
   const { isDateModalOpen, closeDateModal } = useUiStore();
   const [formSubmitted, setFormSubmitted] = useState(false);
 
-  const [formValues, setFormValues] = useState<GetCalendarEvent>({
+  const [formValues, setFormValues] = useState<GetCalendarEvents>({
     id: "",
     title: 'Angel',
     notes: 'Guzman',
