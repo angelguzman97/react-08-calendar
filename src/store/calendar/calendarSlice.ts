@@ -1,30 +1,30 @@
-import { createSlice} from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { addHours } from "date-fns";
-import type { CalendarEvent } from "../../interfaces";
+import type { GetCalendarEvent } from "../../interfaces";
 // import type { CalendarEventProps } from "../../interfaces";
 
-const events: CalendarEvent[] = [
+
+const event: GetCalendarEvent[] = [
     {
-        _id: new Date().getTime(),
-        title: 'Cumpleaños del jefe',
-        note: 'Hay que comprar pastel',
+        id: "",
+        title: "aaa",
+        notes: "ssss",
         start: new Date(),
         end: addHours(new Date(), 2),
-        bgColor: '#fafafa',
         user: {
-            _id: '123',
-            name: 'Angel'
+            _id: "111",
+            name: "angel",
         }
-    },
-];
+    }
+]
 
 interface CalendarState {
-    events: CalendarEvent[];
-    activeEvent: CalendarEvent | null;
+    events: GetCalendarEvent[];
+    activeEvent: GetCalendarEvent | null;
 }
 
 const initialState: CalendarState = {
-    events: events,
+    events: event,
     activeEvent: null,
 };
 
@@ -41,7 +41,7 @@ export const calendarSlice = createSlice({
         },
         onUpdateEvent: (state, { payload }) => {
             state.events = state.events.map(event => {
-                if (event._id === payload._id) {
+                if (event.id === payload.id) {
                     return payload; // evento actualizado
                 }
 
@@ -50,8 +50,7 @@ export const calendarSlice = createSlice({
         },
         onDeleteEvent: (state) => {
             if (state.activeEvent) {
-                state.events = state.events.filter(event => event._id !== state.activeEvent?._id);
-                state.activeEvent = null;
+                state.events = state.events.filter(event => event.id !== state.activeEvent?.id);
             }
         }
     }

@@ -1,2 +1,2 @@
-export * from './CalendarEvent.interface';
-export * from './Events.interface';
+export * from './CalendarEventCreate.interface';
+export * from './GetCalendarEvent.interface';

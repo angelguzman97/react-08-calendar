@@ -8,15 +8,16 @@ export const FabAddNew = () => {
 
     const handleClickNew = () => {
         setActiveEvent({
+            id: '',
             title: '',
-            note: '',
+            notes: '',
             start: new Date(),
             end: addHours(new Date(), 2),
-            bgColor: '#fafafa',
             user: {
-                _id: '123',
-                name: 'Angel'
+                _id: '',
+                name: ''
             }
+            
         })
         openDateModal();
     }

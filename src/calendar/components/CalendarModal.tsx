@@ -11,6 +11,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import { es } from 'date-fns/locale/es';
 import { useCalendarStore, useUiStore } from '../../hooks';
+import type { GetCalendarEvent } from '../../interfaces/GetCalendarEvent.interface';
 
 registerLocale('es', es)
 
@@ -35,11 +36,16 @@ export const CalendarModal = () => {
   const { isDateModalOpen, closeDateModal } = useUiStore();
   const [formSubmitted, setFormSubmitted] = useState(false);
 
-  const [formValues, setFormValues] = useState({
+  const [formValues, setFormValues] = useState<GetCalendarEvent>({
+    id: "",
     title: 'Angel',
-    note: 'Guzman',
+    notes: 'Guzman',
     start: new Date(),
     end: addHours(new Date(), 2),
+    user: {
+      _id: "2222",
+      name: "222"
+    }
   });
 
   // Memorizar los valores
@@ -167,8 +173,8 @@ export const CalendarModal = () => {
             className="form-control"
             placeholder="Notas"
             rows={5}
-            name="note"
-            value={formValues.note}
+            name="notes"
+            value={formValues.notes}
             onChange={onInputChanged}
           ></textarea>
           <small id="emailHelp" className="form-text text-muted">Información adicional</small>

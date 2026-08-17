@@ -6,7 +6,7 @@ import { CalendarEvents, CalendarModal, FabAddNew, FabDelete, Navbar } from '../
 
 import { localizer, getMessagesES } from '../../helpers';
 import { useCalendarStore, useUiStore } from '../../hooks';
-import type { CalendarEvent } from '../../interfaces';
+import type { GetCalendarEvent } from '../../interfaces/GetCalendarEvent.interface';
 
 
 export const CalendarPage = () => {
@@ -16,7 +16,7 @@ export const CalendarPage = () => {
 
   const [lastView, setLastView] = useState<View>(localStorage.getItem('lastView') as View || 'week');
 
-  const eventStyleGetter = (event: CalendarEvent, start: Date, end: Date, isSelected: boolean) => {
+  const eventStyleGetter = (event: GetCalendarEvent, start: Date, end: Date, isSelected: boolean) => {
 
     const style: React.CSSProperties = {
       backgroundColor: '#347cf7',
@@ -35,7 +35,7 @@ export const CalendarPage = () => {
     openDateModal();
   };
 
-  const onSelect = (event: CalendarEvent) => {
+  const onSelect = (event: GetCalendarEvent) => {
 
     setActiveEvent(event);
   };
