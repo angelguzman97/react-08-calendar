@@ -12,10 +12,10 @@ export const useAuthStore = () => {
         dispatch(onChecking());
 
         try {
-            const { data } = await calendarApi.post('/auth', { email, password });
+            const { data } = await calendarApi.post('/auth', { email, password });            
             localStorage.setItem('token', data.token);
             localStorage.setItem('token-init-date', new Date().getTime().toString());
-            dispatch(onLogin({ name: data.name, uid: data.id }));
+            dispatch(onLogin({ name: data.name, id: data.id }));
 
         } catch (error) {
             dispatch(onLogout('Credenciales incorrectas'));

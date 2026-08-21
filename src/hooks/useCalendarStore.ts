@@ -4,6 +4,7 @@ import { onAddNewEvent, onDeleteEvent, onLoadEvents, onSetActiveEvent, onUpdateE
 import type { CalendarEventPayload, CalendarEventResponse, GetCalendarEvents, GetCalendarEventsResponse } from "../interfaces";
 import { calendarApi } from "../api";
 import { convertEventsToDateEvents } from "../helpers";
+import Swal from "sweetalert2";
 
 export const useCalendarStore = () => {
 
@@ -20,15 +21,23 @@ export const useCalendarStore = () => {
 
         // TODO: llegar al back. Update Event
         //todo bien
-        if (calendarEventPayload.id) {
-            // actualizando
-            dispatch(onUpdateEvent({ ...calendarEventPayload }));
-        } else {
+        try {
+            if (calendarEventPayload.id) {
+                // actualizando
+                await calendarApi.put(`/events/${calendarEventPayload.id}`, calendarEventPayload);
+                dispatch(onUpdateEvent({ ...calendarEventPayload, user }));
+                return;
+            }
             // creando
             const { data } = await calendarApi.post<CalendarEventResponse>('/events', calendarEventPayload);
 
             dispatch(onAddNewEvent({ ...calendarEventPayload, id: data.evento.id, user }));
+        } catch (error: any) {
+            console.log(error);
+            Swal.fire('Error al guardar', error.response.data.msg, 'error');
         }
+
+
     };
 
     const startDeletingEvent = async () => {
