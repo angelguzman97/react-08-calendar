@@ -25,7 +25,7 @@ export interface GetCalendarEvent {
     start: Date;
     end: Date;
     user: {
-        id: string;
+       _id: string;
         name: string;
     }
 }

@@ -1,7 +1,9 @@
-import type { EventProps } from "../../interfaces";
+import type { EventProps } from "react-big-calendar";
+import type { GetCalendarEvent } from "../../interfaces";
 
 
-export const CalendarEvents = ({ event }: EventProps) => {
+
+export const CalendarEvents = ({ event }: EventProps<GetCalendarEvent>) => {
     const { title, user } = event;
     return (
         <>

@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "./useAppDispatch";
 import { onAddNewEvent, onDeleteEvent, onLoadEvents, onSetActiveEvent, onUpdateEvent, type RootState } from "../store";
-import type { CalendarEventPayload, CalendarEventResponse, GetCalendarEvents, GetCalendarEventsResponse } from "../interfaces";
+import type { CalendarEventPayload, CalendarEventResponse, GetCalendarEvent, GetCalendarEventsResponse } from "../interfaces";
 import { calendarApi } from "../api";
 import { convertEventsToDateEvents } from "../helpers";
 import Swal from "sweetalert2";
@@ -13,7 +13,7 @@ export const useCalendarStore = () => {
     const { events, activeEvent } = useSelector((state: RootState) => state.calendar);
     const { user } = useSelector((state: RootState) => state.auth);
 
-    const setActiveEvent = (calendarEvent: GetCalendarEvents) => {
+    const setActiveEvent = (calendarEvent: GetCalendarEvent) => {
         dispatch(onSetActiveEvent(calendarEvent));
     };
 

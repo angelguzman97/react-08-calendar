@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type { GetCalendarEvents } from "../../interfaces";
+import type { GetCalendarEvent } from "../../interfaces";
 // import { addHours } from "date-fns";
 // import type { CalendarEventProps } from "../../interfaces";
 
@@ -20,8 +20,8 @@ import type { GetCalendarEvents } from "../../interfaces";
 
 interface CalendarState {
     isLoadingEvents: boolean;
-    events: GetCalendarEvents[];
-    activeEvent: GetCalendarEvents | null;
+    events: GetCalendarEvent[];
+    activeEvent: GetCalendarEvent | null;
 }
 
 const initialState: CalendarState = {
