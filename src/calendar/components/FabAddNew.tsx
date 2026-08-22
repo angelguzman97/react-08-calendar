@@ -11,8 +11,8 @@ export const FabAddNew = () => {
             id: '',
             title: '',
             notes: '',
-            start: new Date().getDate().toString(),
-            end: addHours(new Date(), 2).toString(),
+            start: new Date(),
+            end: addHours(new Date(), 2),
             user: {
                 _id: '',
                 name: ''

@@ -17,7 +17,7 @@ export const CalendarPage = () => {
 
   const [lastView, setLastView] = useState<View>(localStorage.getItem('lastView') as View || 'week');
 
-  const eventStyleGetter = (event: GetCalendarEvents, start: Date, end: Date, isSelected: boolean) => {
+  const eventStyleGetter = (event: GetCalendarEvents) => {
 
     const isMyEvent = (user?.id === event.user._id);
 
@@ -34,7 +34,7 @@ export const CalendarPage = () => {
   };
 
   const onDoubleClick = () => {
-    // console.log({ onDoubleClick: event });
+
     openDateModal();
   };
 
