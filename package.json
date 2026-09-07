@@ -19,7 +19,19 @@
     "react-dom": "^19.2.8",
     "react-redux": "^9.3.0",
     "react-router-dom": "^7.18.2",
-    "sweetalert2": "^11.26.25"
+    "sweetalert2": "^11.26.25",
+    "workbox-background-sync": "6.4.2",
+    "workbox-broadcast-update": "6.4.2",
+    "workbox-cacheable-response": "6.4.2",
+    "workbox-core": "6.4.2",
+    "workbox-expiration": "6.4.2",
+    "workbox-google-analytics": "6.4.2",
+    "workbox-navigation-preload": "6.4.2",
+    "workbox-precaching": "6.4.2",
+    "workbox-range-requests": "6.4.2",
+    "workbox-routing": "6.4.2",
+    "workbox-strategies": "6.4.2",
+    "workbox-streams": "6.4.2"
   },
   "devDependencies": {
     "@babel/core": "^7.29.7",
