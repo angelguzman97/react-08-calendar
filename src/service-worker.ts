@@ -50,14 +50,14 @@ registerRoute(
     // Return true to signal that we want to use the handler.
     return true;
   },
-  createHandlerBoundToURL(import.meta.env.PUBLIC_URL + '/index.html')
+  createHandlerBoundToURL('/index.html')
 );
 
 // An example runtime caching route for requests that aren't handled by the
 // precache, in this case same-origin .png requests like those from in public/
 registerRoute(
   // Add in any other file extensions or routing criteria as needed.
-  ({ url }) => url.origin === self.location.origin && url.pathname.endsWith('.png'),
+  ({ url }) => url.origin === self.location.origin && url.pathname.endsWith('.svg'),
   // Customize this strategy as needed, e.g., by changing to CacheFirst.
   new StaleWhileRevalidate({
     cacheName: 'images',
@@ -78,3 +78,65 @@ self.addEventListener('message', (event) => {
 });
 
 // Any other custom service worker logic can go here.
+
+self.addEventListener('install', async (event) => {
+  const cache = await caches.open('cache-1');
+  console.log(event);
+
+
+  await cache.addAll([
+    'https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css',
+    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.0/css/all.min.css',
+    '/favicon.svg'
+  ]);
+
+});
+
+const apiArrays = ['http://localhost:4000/api/auth/renew', 'http://localhost:4000/api/events'];
+
+self.addEventListener('fetch', (event) => {
+  // if (event.request.url !== 'http://localhost:4000/api/auth/renew') return;
+  if (!apiArrays.includes(event.request.url)) return;
+  console.log(event.request.url);
+  // console.log('Voy a manejar el renew');
+  const resp = fetch(event.request)
+    .then(async (response) => {
+
+      if (!response) {
+        const cached = await caches.match(event.request);
+        if (cached) {
+          return cached;
+        }
+        //fullback obligatorio: nunca puede quedar undefined
+        return new Response(JSON.stringify({ error: 'offline' }), {
+          status: 503,
+          headers: { 'Content-Type': 'application/json' }
+        });
+      }
+
+      // Guardar en cache la respuesta
+      await caches.open('cache-dynamic').then(async (cache) => {
+        await cache.addAll([event.request])
+      });
+
+
+
+
+      return response.clone();
+    })
+    .catch(async (err) => {
+      console.log('offline response', err);
+      const cached = await caches.match(event.request);
+      if (cached) {
+        return cached;
+      }
+      //fullback obligatorio: nunca puede quedar undefined
+      return new Response(JSON.stringify({ error: 'offline' }), {
+        status: 503,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    });
+
+  event.respondWith(resp);
+
+});
