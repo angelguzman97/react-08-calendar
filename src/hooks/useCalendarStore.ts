@@ -34,7 +34,7 @@ export const useCalendarStore = () => {
             dispatch(onAddNewEvent({ ...calendarEventPayload, id: data.evento.id, user }));
         } catch (error: any) {
             // console.log(error);
-            Swal.fire('Error al guardar', error.response.data.msg, 'error');
+            Swal.fire('Error al guardar', error.response?.data?.msg || "No hay conexión con el servidor", 'error');
         }
 
 

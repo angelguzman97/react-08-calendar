@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && pnpm run PWA",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "PWA": "workbox injectManifest workbox-config.cjs"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.12.0",
@@ -16,22 +17,11 @@
     "react": "^19.2.8",
     "react-big-calendar": "^1.20.0",
     "react-datepicker": "^9.1.0",
+    "react-detect-offline": "^2.4.5",
     "react-dom": "^19.2.8",
     "react-redux": "^9.3.0",
     "react-router-dom": "^7.18.2",
-    "sweetalert2": "^11.26.25",
-    "workbox-background-sync": "6.4.2",
-    "workbox-broadcast-update": "6.4.2",
-    "workbox-cacheable-response": "6.4.2",
-    "workbox-core": "6.4.2",
-    "workbox-expiration": "6.4.2",
-    "workbox-google-analytics": "6.4.2",
-    "workbox-navigation-preload": "6.4.2",
-    "workbox-precaching": "6.4.2",
-    "workbox-range-requests": "6.4.2",
-    "workbox-routing": "6.4.2",
-    "workbox-strategies": "6.4.2",
-    "workbox-streams": "6.4.2"
+    "sweetalert2": "^11.26.25"
   },
   "devDependencies": {
     "@babel/core": "^7.29.7",
@@ -41,6 +31,7 @@
     "@types/node": "^24.13.3",
     "@types/react": "^19.2.17",
     "@types/react-big-calendar": "^1.16.3",
+    "@types/react-detect-offline": "^2.4.6",
     "@types/react-dom": "^19.2.3",
     "@types/react-modal": "^3.16.3",
     "@vitejs/plugin-react": "^6.0.4",
@@ -52,7 +43,6 @@
     "react-modal": "^3.16.3",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.65.0",
-    "vite": "^8.2.0",
-    "vite-plugin-pwa": "^1.3.0"
+    "vite": "^8.2.0"
   }
 }
